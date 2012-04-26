@@ -29,18 +29,38 @@
 
 <p>API voor eenvoudig gebruik PDOK en OGC services in websites</p>
 Beschikbare parameters:<BR>
-- bbox<BR>
-- loc<BR>
-- marker<BR>
-- layer<BR>
-- zl<BR>
+<b>bbox</b><BR>
+Hiermee kan een rechthoek opgegeven worden waarop ingezoomd moet worden<BR>
+Bijvoorbeeld: bbox=130000,450000,150000,470000<BR>
+<b>loc<b><BR>
+Hiermee kan een loctie opgegeven worden waarop ingezoomd moet worden.<BR>
+Bijvoorbeeld: loc=136260,456394<BR>
+<b>marker</b><BR>
+Hiermee kan een locatie opgegeven worden waar een marker getoond moet worden op de kaart<BR>
+Bijvoorbeeld: marker=136260,456394<BR>
+<b>layer</b><BR>
+Hier kan een komma-gescheiden lijst opgegeven worden met namen van kaartlagen welke in de viewer getoond moeten worden<BR>
+Momenteel worden de volgende kaartlagen gebruikt:<BR>
+- AAN,<BR>
+- AHN25M,<BR>
+- GEMEENTEGRENZEN (dit is een alternatieve opmaak van de bestuurlijke gemeentegrenzen),<BR>
+- NATIONALE_PARKEN,<BR>
+- NOK2011,<BR>
+- TEXEL_20120423 (dit is een kaart van Texel met de gevectoriseerde Bonnebladen),<BR>
+- TEXEL_20120423_OUTLINE (dit is een kaart van Texel met de gevectoriseerde Bonnebladen)<BR>
+Bijvoorbeeld: layer=AAN,NATIONALE_PARKEN,TEXEL_20120423_OUTLINE<BR>
+De laag welke vooraan in de lijst staat is de onderste laag. Dat betekent dat in het bovenstaande voorbeeld onderop de AAN laag weergegeven wordt, dan de Nationale Parken en dan de omlijning van de gevectoriseerde Bonnebladen.<BR>
+<b>zl</b><BR>
+Hiermee wordt een zoomnivo voor de BRTAchtergrondkaart opgegeven waarop ingezoomd wordt<BR>
+Bijvoorbeeld: zl=9
 <h3>Demo URL's:<BR>
 <HR>
-<a HREF="./api.html" target="_blank">Viewer</a><BR>
-<a HREF="./api.html?marker=136260,456394" target="_blank">Viewer met een marker op de locatie van het nieuwe kantoor van DLG in Utrecht</a><BR>
-<a HREF="./api.html?loc=136260,456394&zl=12" target="_blank">Viewer ingezoomd naar nivo 12 en een locatie</a><BR>
-<a HREF="./api.html?marker=116653,565299&loc=116653,565299&zl=10&layer=TEXEL_20120423_OUTLINE" target="_blank">Viewer met een marker op Texel, inzoomen naar nivo 8 plus de outline laag van Texel aan</a><BR>
-<a HREF="./api.html?marker=136260,456394&bbox=130000,450000,150000,470000" target="_blank">Viewer ingezoomd op een bounding box plus een marker</a><BR>
+<a HREF="./api.html" target="_blank">Default viewer</a><BR>
+<a HREF="./api.html?marker=136260,456394" target="_blank">Viewer met een marker op de locatie van het nieuwe DLG kantoor in Utrecht</a><BR>
+<a HREF="./api.html?loc=136260,456394&zl=12" target="_blank">Viewer ingezoomd naar nivo 12 en de bovenstaande locatie</a><BR>
+<a HREF="./api.html?loc=136260,456394&zl=12&marker=136260,456394" target="_blank">Bovenstaande viewer met marker op de locatie</a><BR>
+<a HREF="./api.html?marker=116653,565299&loc=116653,565299&zl=10&layer=TEXEL_20120423_OUTLINE" target="_blank">Viewer met een marker op Texel, ingezoomd naar nivo 8 en de outline van de Bonnebladen</a><BR>
+<a HREF="./api.html?marker=136260,456394&bbox=130000,450000,150000,470000&layer=gemeentegrenzen" target="_blank">Viewer ingezoomd op een bounding box plus de alternatieve opmaak van de gemeentekaart</a><BR>
 </H3>
 <HR>
 <H3>Demo kaart via iFrame<BR>
