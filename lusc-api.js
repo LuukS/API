@@ -54,7 +54,7 @@ Lusc.Api = function(config) {
      * @private
      * Look up array, having the supported layers ATM.
      */
-    this.supportedLayers = ["TEXEL_20120423","TEXEL_20120423_OUTLINE"];
+    this.supportedLayers = ["AAN","AHN25M","GEMEENTEGRENZEN","NATIONALE_PARKEN","NOK2011","TEXEL_20120423","TEXEL_20120423_OUTLINE"];
     
     /**
      * @private
@@ -99,9 +99,12 @@ Lusc.Api = function(config) {
  * The values are restored in member vars. On error a default is set.
  */
 Lusc.Api.prototype.validateConfig = function(config) {
-    if (config.layer && OpenLayers.Util.indexOf(this.supportedLayers, config.layer)) {
+	if (config.layer && !OpenLayers.Util.isArray(config.layer)) {
+		config.layer = [config.layer];
+	}
+	if (config.layer && OpenLayers.Util.indexOf(this.supportedLayers, config.layer) && OpenLayers.Util.isArray(config.layer)) {
         this.layer = config.layer;
-    }
+	}
     
     if (config.zl) {
         this.zl = config.zl;
@@ -154,20 +157,92 @@ Lusc.Api.prototype.createOlMap = function() {
 	);
     olMap.addLayer(lyrBRTAchtergrondkaart);
 	
-	// create WMS
-    var layer = new OpenLayers.Layer.WMS.Untiled(
-            "Gevectoriseerde Bonnebladen",
-            "http://mapserver.sara.nl/bonne_vect/cgi-bin/mapserv?map=bonne_vect_texel.map", 
-			{layers: this.layer,transparent: 'true',format: "image/gif"},
-			{visibility: true,isBaseLayer:false},
-			{singleTile: true},
-            {
-                attribution: this.attribution
-            } 
-    );
     // apply layer if a layer was given
 	if (this.layer != null) {
-		olMap.addLayer(layer);
+		var layer = null;
+		var l;
+		for (l in this.layer)
+		{
+			switch (this.layer[l].toUpperCase()){
+				case "AAN":
+					var layer = new OpenLayers.Layer.WMS.Untiled(
+							"AAN",
+							"http://geodata.nationaalgeoregister.nl/aan/wms",
+							{layers: 'aan',transparent: 'true',format: "image/gif"},
+							{visibility: true,isBaseLayer:false},
+							{singleTile: true}
+					);
+					olMap.addLayer(layer);
+					break;
+				case "AHN25M":
+					var layer = new OpenLayers.Layer.WMS.Untiled(
+							"AHN25M",
+							"http://geodata.nationaalgeoregister.nl/ahn25m/wms",
+							{layers: 'ahn25m',transparent: 'true',format: "image/gif"},
+							{visibility: true,isBaseLayer:false},
+							{singleTile: true}
+					);
+					olMap.addLayer(layer);
+					break;
+				case "GEMEENTEGRENZEN":
+					var layer = new OpenLayers.Layer.WMS.Untiled(
+							"Gemeentegrenzen",
+							"http://geodata.nationaalgeoregister.nl/bestuurlijkegrenzen/wms?sld=http://luuks.github.com/API/gemeentegrenzen_grijs_gestippeld.sld",
+							{layers: 'gemeenten',transparent: 'true',format: "image/gif"},
+							{visibility: true,isBaseLayer:false},
+							{singleTile: true}
+					);
+					olMap.addLayer(layer);
+					break;
+				case "NATIONALE_PARKEN":
+					var layer = new OpenLayers.Layer.WMS.Untiled(
+							"Nationale parken",
+							"http://geodata.nationaalgeoregister.nl/nationaleparken/wms",
+							{layers: 'nationaleparken',transparent: 'true',format: "image/gif"},
+							{visibility: true,isBaseLayer:false},
+							{singleTile: true}
+					);
+					olMap.addLayer(layer);
+					break;
+				case "NOK2011":
+					var layer = new OpenLayers.Layer.WMS.Untiled(
+							"NOK2011",
+							"http://geodata.nationaalgeoregister.nl/nok2011/wms",
+							{layers: 'begrenzing,planologischeehs,verwervinginrichting',transparent: 'true',format: "image/gif"},
+							{visibility: true,isBaseLayer:false},
+							{singleTile: true}
+					);
+					olMap.addLayer(layer);
+					break;
+				case "TEXEL_20120423":
+					var layer = new OpenLayers.Layer.WMS.Untiled(
+							"Gevectoriseerde Bonnebladen",
+							"http://mapserver.sara.nl/bonne_vect/cgi-bin/mapserv?map=bonne_vect_texel.map", 
+							{layers: 'TEXEL_20120423',transparent: 'true',format: "image/gif"},
+							{visibility: true,isBaseLayer:false},
+							{singleTile: true}
+					);
+					olMap.addLayer(layer);
+					break;
+				case "TEXEL_20120423_OUTLINE":
+					var layer = new OpenLayers.Layer.WMS.Untiled(
+							"Gevectoriseerde Bonnebladen",
+							"http://mapserver.sara.nl/bonne_vect/cgi-bin/mapserv?map=bonne_vect_texel.map", 
+							{layers: 'TEXEL_20120423_OUTLINE',transparent: 'true',format: "image/gif"},
+							{visibility: true,isBaseLayer:false},
+							{singleTile: true},
+							{
+								attribution: this.attribution
+							} 
+					);
+					olMap.addLayer(layer);
+					break;
+				default:
+					//do nothing
+					var layer;
+					break;
+			}
+		}
 	}
 	
     // apply BBOX or zoomlevel and location
