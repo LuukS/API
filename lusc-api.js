@@ -54,7 +54,7 @@ Lusc.Api = function(config) {
      * @private
      * Look up array, having the supported layers ATM.
      */
-    this.supportedLayers = ["AAN","AHN25M","GEMEENTEGRENZEN","NATIONALE_PARKEN","NOK2011","TEXEL_20120423","TEXEL_20120423_OUTLINE"];
+    this.supportedLayers = ["AAN","AHN25M","GEMEENTEGRENZEN","GEMEENTEGRENZEN_LABEL","NATIONALE_PARKEN","NOK2011","TEXEL_20120423","TEXEL_20120423_OUTLINE"];
     
     /**
      * @private
@@ -188,6 +188,16 @@ Lusc.Api.prototype.createOlMap = function() {
 					var layer = new OpenLayers.Layer.WMS.Untiled(
 							"Gemeentegrenzen",
 							"http://geodata.nationaalgeoregister.nl/bestuurlijkegrenzen/wms?sld=http://luuks.github.com/API/gemeentegrenzen_grijs_gestippeld.sld",
+							{layers: 'gemeenten',transparent: 'true',format: "image/gif"},
+							{visibility: true,isBaseLayer:false},
+							{singleTile: true}
+					);
+					olMap.addLayer(layer);
+					break;
+				case "GEMEENTEGRENZEN_LABEL":
+					var layer = new OpenLayers.Layer.WMS.Untiled(
+							"Gemeentegrenzen",
+							"http://geodata.nationaalgeoregister.nl/bestuurlijkegrenzen/wms?sld=http://luuks.github.com/API/gemeentegrenzen_label_grijs_gestippeld.sld",
 							{layers: 'gemeenten',transparent: 'true',format: "image/gif"},
 							{visibility: true,isBaseLayer:false},
 							{singleTile: true}
