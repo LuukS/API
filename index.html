@@ -28,6 +28,23 @@
         <h1>API</h1>
 
 <p>API voor eenvoudig gebruik PDOK en OGC services in websites</p>
+Beschikbare parameters:<BR>
+- bbox<BR>
+- loc<BR>
+- marker<BR>
+- layer<BR>
+- zl<BR>
+<h3>Demo URL's:<BR>
+<HR>
+<a HREF="./api.html" target="_blank">Viewer</a><BR>
+<a HREF="./api.html?marker=136260,456394" target="_blank">Viewer met een marker op de locatie van het nieuwe kantoor van DLG in Utrecht</a><BR>
+<a HREF="./api.html?loc=136260,456394&zl=12" target="_blank">Viewer ingezoomd naar nivo 12 en een locatie</a><BR>
+<a HREF="./api.html?marker=116653,565299&loc=116653,565299&zl=10&layer=TEXEL_20120423_OUTLINE" target="_blank">Viewer met een marker op Texel, inzoomen naar nivo 8 plus de outline laag van Texel aan</a><BR>
+<a HREF="./api.html?marker=136260,456394&bbox=130000,450000,150000,470000" target="_blank">Viewer ingezoomd op een bounding box plus een marker</a><BR>
+</H3>
+<HR>
+<H3>Demo kaart via iFrame<BR>
+<iframe width="500" height="350" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="./api.html?layer=TEXEL_20120423_OUTLINE&zl=10&loc=116653,570000&marker=116653,570000" style="border: 0"></iframe>
       </section>
       <footer>
         <p>This project is maintained by <a href="https://github.com/LuukS">LuukS</a></p>
