@@ -22,6 +22,7 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
     <CssParameter name="stroke">#646464</CssParameter>
     <CssParameter name="stroke-width">1.0</CssParameter>
     <CssParameter name="stroke-opacity">1</CssParameter>
+    <CssParameter name="stroke-dasharray">5 2</CssParameter>
   </Stroke>
 </PolygonSymbolizer>
 </Rule>      
