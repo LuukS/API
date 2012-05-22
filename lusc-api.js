@@ -188,7 +188,7 @@ Lusc.Api.prototype.createOlMap = function() {
 					var layer = new OpenLayers.Layer.WMS.Untiled(
 							"Gemeentegrenzen",
 							"http://geodata.nationaalgeoregister.nl/bestuurlijkegrenzen/wms?sld=http://luuks.github.com/API/gemeentegrenzen_grijs_gestippeld.sld",
-							{layers: 'gemeenten',transparent: 'true',format: "image/gif"},
+							{layers: 'gemeenten_2012',transparent: 'true',format: "image/gif"},
 							{visibility: true,isBaseLayer:false},
 							{singleTile: true}
 					);
@@ -198,7 +198,7 @@ Lusc.Api.prototype.createOlMap = function() {
 					var layer = new OpenLayers.Layer.WMS.Untiled(
 							"Gemeentegrenzen",
 							"http://geodata.nationaalgeoregister.nl/bestuurlijkegrenzen/wms?sld=http://luuks.github.com/API/gemeentegrenzen_label_grijs_gestippeld.sld",
-							{layers: 'gemeenten',transparent: 'true',format: "image/gif"},
+							{layers: 'gemeenten_2012',transparent: 'true',format: "image/gif"},
 							{visibility: true,isBaseLayer:false},
 							{singleTile: true}
 					);
