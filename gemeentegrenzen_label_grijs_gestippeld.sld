@@ -27,7 +27,7 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 </PolygonSymbolizer>
 <TextSymbolizer>
          <Label>
-           <ogc:PropertyName>gm_naam</ogc:PropertyName>
+           <ogc:PropertyName>gemeentenaam</ogc:PropertyName>
          </Label>
          <Halo>
            <Radius>1</Radius>
