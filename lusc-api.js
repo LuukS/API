@@ -4,17 +4,18 @@
  * Class implements an API for an easy to use embedding of
  * our pre-defined mapservices in any website with an OpenLayers slippy map.
  * This class is based upon the Terrestris WMS-API
+ * The markerstyles are based upon the Mapicons from Nicolas Mollet (http://mapicons.nicolasmollet.com)
  * 
  * @examples
  * 
  *  <iframe width="400" height="300" frameborder="0" 
  *    scrolling="no" marginheight="0" marginwidth="0" 
- *    src="/api/api.html?marker=136260,456394&loc=136260,456394&zl=8"
+ *    src="/api/api.html?mloc=136260,456394&loc=136260,456394&zl=8"
  *    style="border: 0">
  * OR
  *  <iframe width="400" height="300" frameborder="0" 
  *    scrolling="no" marginheight="0" marginwidth="0" 
- *    src="/api/api.html?marker=136260,456394&bbox=130000,450000,150000,470000"
+ *    src="/api/api.html?mloc=136260,456394&mt=1&bbox=130000,450000,150000,470000"
  *    style="border: 0">
  */
 Lusc = {};
@@ -44,7 +45,27 @@ Lusc.Api = function(config) {
      * Reference to map object
      */
     this.map = null;
+
+    /**
+     * Reference to markerlocation object
+     */
+    this.mloc = null;
+
+    /**
+     * Reference to markertype object
+     */
+    this.mt = null;
+
+    /**
+     * Reference to popup titel object
+     */
+    this.titel = null;
     
+    /**
+     * Reference to markertype object
+     */
+    this.tekst = null;
+
     /**
      * Reference to the DIV-id the map should be rendered in
      */
@@ -52,9 +73,31 @@ Lusc.Api = function(config) {
     
     /**
      * @private
-     * Look up array, having the supported layers ATM.
+     * Look up array, having the supported layers.
      */
     this.supportedLayers = ["AAN","AHN25M","GEMEENTEGRENZEN","GEMEENTEGRENZEN_LABEL","NATIONALE_PARKEN","NOK2011","TEXEL_20120423","TEXEL_20120423_OUTLINE"];
+
+    /**
+     * @private
+     * Look up array, having the supported markertypes.
+     */
+    this.markers = [
+	    "default.png",
+	    "rijk.png",
+	    "information_blue.png",
+	    "information_green.png",
+	    "information_yellow.png",
+	    "geonovum_blue.png",
+	    "geonovum_green.png",
+	    "geonovum_yellow.png",
+	    "kadaster_blue.png",
+	    "kadaster_green.png",
+	    "kadaster_yellow.png",
+	    "rijk_blue.png",
+	    "rijk_green.png",
+	    "rijk_yellow.png",
+	    "star-3.png"
+    ];
     
     /**
      * @private
@@ -68,7 +111,7 @@ Lusc.Api = function(config) {
           fillColor : '#ee000d',
           fillOpacity : 1,
           pointRadius : 12,
-          externalGraphic: './lusc_pointer.png'
+          externalGraphic: './markertypes/default.png'
     };
 
     
@@ -118,8 +161,20 @@ Lusc.Api.prototype.validateConfig = function(config) {
         this.bbox = config.bbox;
     }
     
-    if (config.marker && OpenLayers.Util.isArray(config.marker) && config.marker.length == 2) {
-        this.marker = config.marker;
+    if (config.mloc && OpenLayers.Util.isArray(config.mloc) && config.mloc.length == 2) {
+        this.mloc = config.mloc;
+    }
+    
+    if (config.mt) {
+        this.mt = config.mt;
+    }
+
+    if (config.titel) {
+        this.titel = config.titel;
+    }
+
+    if (config.tekst) {
+        this.tekst = config.tekst;
     }
     
     if (config.div) {
@@ -265,17 +320,44 @@ Lusc.Api.prototype.createOlMap = function() {
         olMap.zoomToMaxExtent();
     }
     
-    // add marker
-    if (this.marker != null) {
-        var markerGeom = new OpenLayers.Geometry.Point(this.marker[0], this.marker[1]);
-        var markerFeat = new OpenLayers.Feature.Vector(markerGeom);
-        
+    // add marker and use markertype if given, otherwise the default marker
+    if (this.mloc != null) {
+       var markerGeom = new OpenLayers.Geometry.Point(this.mloc[0], this.mloc[1]);
+       var markerFeat = new OpenLayers.Feature.Vector(markerGeom);
+       if (this.mt != null){
+	        if (this.mt < this.markers.length){
+		        this.styleObj.externalGraphic = "./markertypes/" + this.markers[parseInt(this.mt)];
+		    }
+		    else{
+		        this.styleObj.externalGraphic = "./markertypes/" + this.markers[0];
+		    }
+        }
         var markerLayer = new OpenLayers.Layer.Vector('Marker', {
             styleMap: new OpenLayers.StyleMap(this.styleObj)
         });
-        markerLayer.addFeatures([markerFeat]);
-        
+
+	    // add popup if the parameters titel or tekst are used
+	    if (this.titel != null || this.tekst != null) {
+	    	strOms = "";
+	    	if (this.titel != null){
+		    	strOms = "<h2>" + this.titel + "</h2>";
+	    	}
+	    	if (this.tekst != null){
+		    	strOms = strOms + this.tekst;
+	    	}
+	    	markerFeat.attributes.oms = strOms;
+	    	// Interaction; not needed for initial display.
+            selectControl = new OpenLayers.Control.SelectFeature(markerLayer);
+            olMap.addControl(selectControl);
+            selectControl.activate();
+            markerLayer.events.on({
+                'featureselected': onFeatureSelect,
+                'featureunselected': onFeatureUnselect
+            });
+		}
+
         olMap.addLayer(markerLayer);
+        markerLayer.addFeatures([markerFeat]);
     }
 
     return olMap;
@@ -286,6 +368,41 @@ Lusc.Api.prototype.createOlMap = function() {
  * @public
  */
 Lusc.Api.prototype.getMapObject = function() {
-	
 	return this.map;
+}
+
+/**
+ * Interaction functionality for clicking on the marker
+ */
+function onPopupClose(evt) {
+    // 'this' is the popup.
+    var feature = this.feature;
+    if (feature.layer) { // The feature is not destroyed
+        selectControl.unselect(feature);
+    } else { // After "moveend" or "refresh" events on POIs layer all 
+             //     features have been destroyed by the Strategy.BBOX
+        this.destroy();
+    }
+}
+
+function onFeatureSelect(evt) {
+    feature = evt.feature;
+    popup = new OpenLayers.Popup.FramedCloud("featurePopup",
+                             feature.geometry.getBounds().getCenterLonLat(),
+                             new OpenLayers.Size(100,100),
+                             feature.attributes.oms,
+                             null, true, onPopupClose);
+    feature.popup = popup;
+    popup.feature = feature;
+    this.map.addPopup(popup, true);
+}
+
+function onFeatureUnselect(evt) {
+    feature = evt.feature;
+    if (feature.popup) {
+        popup.feature = null;
+        this.map.removePopup(feature.popup);
+        feature.popup.destroy();
+        feature.popup = null;
+    }
 }

@@ -35,9 +35,26 @@ Bijvoorbeeld: bbox=130000,450000,150000,470000<BR>
 <big>loc</big><BR>
 Hiermee kan een loctie opgegeven worden waarop ingezoomd moet worden.<BR>
 Bijvoorbeeld: loc=136260,456394<BR>
-<big>marker</big><BR>
+<big>mloc</big><BR>
 Hiermee kan een locatie opgegeven worden waar een marker getoond moet worden op de kaart<BR>
-Bijvoorbeeld: marker=136260,456394<BR>
+Bijvoorbeeld: mloc=136260,456394<BR>
+<big>mt</big><BR>
+Hiermee kan een voorgedefinieerde marker opgegeven worden. De volgende markertypes zijn beschikbaar:<BR>
+0 <img src="./markertypes/default.png"> dit is het standaard symbool<BR>
+1 <img src="./markertypes/rijk.png"><BR>
+2 <img src="./markertypes/information_blue.png">,&nbsp;
+3 <img src="./markertypes/information_green.png">,&nbsp;
+4 <img src="./markertypes/information_yellow.png"><BR>
+5 <img src="./markertypes/geonovum_blue.png">,&nbsp;
+6 <img src="./markertypes/geonovum_green.png">,&nbsp;
+7 <img src="./markertypes/geonovum_yellow.png"><BR>
+8 <img src="./markertypes/kadaster_blue.png">,&nbsp;
+9 <img src="./markertypes/kadaster_green.png">,&nbsp;
+10 <img src="./markertypes/kadaster_yellow.png"><BR>
+11 <img src="./markertypes/rijk_blue.png">,&nbsp;
+12 <img src="./markertypes/rijk_green.png">,&nbsp;
+13 <img src="./markertypes/rijk_yellow.png"><BR>
+14 <img src="./markertypes/star-3.png"><BR>
 <big>layer</big><BR>
 Hier kan een komma-gescheiden lijst opgegeven worden met namen van kaartlagen welke in de viewer getoond moeten worden<BR>
 Momenteel worden de volgende kaartlagen gebruikt:<BR>
@@ -53,21 +70,26 @@ Bijvoorbeeld: layer=AAN,NATIONALE_PARKEN,TEXEL_20120423_OUTLINE<BR>
 De laag welke vooraan in de lijst staat is de onderste laag. Dat betekent dat in het bovenstaande voorbeeld onderop de AAN laag weergegeven wordt, dan de Nationale Parken en dan de omlijning van de gevectoriseerde Bonnebladen.<BR>
 <big>zl</big><BR>
 Hiermee wordt een zoomnivo voor de BRTAchtergrondkaart opgegeven waarop ingezoomd wordt<BR>
-Bijvoorbeeld: zl=9
+Bijvoorbeeld: zl=9<BR>
+<big>titel</big><BR>
+Hiermee kan een popup met een titel getoond worden indien een marker op de kaart getoond wordt. Deze parameter bevat de titel van de popup<BR>
+<big>tekst</big><BR>
+Hiermee kan een popup van extra tekst voorzien worden indien een marker op de kaart getoond wordt. De popup wordt geopend als op de marker geklikt wordt<BR>
 <h3>Demo URL's:<BR>
 <HR>
 <a HREF="./api.html" target="_blank">Default viewer</a><BR>
-<a HREF="./api.html?marker=136260,456394" target="_blank">Viewer met een marker op de locatie van het nieuwe DLG kantoor in Utrecht</a><BR>
+<a HREF="./api.html?mloc=136260,456394" target="_blank">Viewer met een marker op de locatie van het nieuwe DLG kantoor in Utrecht</a><BR>
 <a HREF="./api.html?loc=136260,456394&zl=12" target="_blank">Viewer ingezoomd naar nivo 12 en de bovenstaande locatie</a><BR>
-<a HREF="./api.html?loc=136260,456394&zl=12&marker=136260,456394" target="_blank">Bovenstaande viewer met marker op de locatie</a><BR>
-<a HREF="./api.html?marker=116653,565299&loc=116653,565299&zl=10&layer=TEXEL_20120423_OUTLINE" target="_blank">Viewer met een marker op Texel, ingezoomd naar nivo 8 en de outline van de Bonnebladen</a><BR>
-<a HREF="./api.html?marker=136260,456394&bbox=130000,450000,150000,470000&layer=gemeentegrenzen" target="_blank">Viewer ingezoomd op een bounding box plus de alternatieve opmaak van de gemeentekaart</a><BR>
-<a HREF="./api.html?marker=136260,456394&bbox=130000,450000,150000,470000&layer=gemeentegrenzen" target="_blank">Viewer ingezoomd op een bounding box plus de alternatieve opmaak van de gemeentekaart</a><BR>
+<a HREF="./api.html?loc=136260,456394&zl=12&mloc=136260,456394" target="_blank">Bovenstaande viewer met marker op de locatie</a><BR>
+<a HREF="./api.html?mloc=116653,565299&loc=116653,565299&zl=10&layer=TEXEL_20120423_OUTLINE" target="_blank">Viewer met een marker op Texel, ingezoomd naar nivo 8 en de outline van de Bonnebladen</a><BR>
+<a HREF="./api.html?mloc=136260,456394&bbox=130000,450000,150000,470000&layer=gemeentegrenzen" target="_blank">Viewer ingezoomd op een bounding box plus de alternatieve opmaak van de gemeentekaart</a><BR>
+<a HREF="./api.html?mloc=136260,456394&bbox=130000,450000,150000,470000&layer=gemeentegrenzen" target="_blank">Viewer ingezoomd op een bounding box plus de alternatieve opmaak van de gemeentekaart</a><BR>
 <a HREF="./api.html?bbox=158536,304712,221940,343719&layer=AHN25M,gemeentegrenzen_label" target="_blank">Viewer ingezoomd op Limburg plus de AHN en de alternatieve opmaak van de gemeentekaart met labels</a><BR>
+<a HREF="./api.html?loc=176212,317748&zl=8&mloc=176212,317748&mt=4&layer=gemeentegrenzen_label&titel=Maastricht&tekst=Vrijthof" target="_blank">Viewer ingezoomd op Maastricht plus de alternatieve opmaak van de gemeentekaart met labels en een popup</a><BR>
 </H3>
 <HR>
 <H3>Demo kaart via iFrame<BR>
-<iframe width="500" height="350" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="./api.html?layer=TEXEL_20120423_OUTLINE&zl=10&loc=116653,570000&marker=116653,570000" style="border: 0"></iframe>
+<iframe width="500" height="350" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="./api.html?layer=TEXEL_20120423_OUTLINE&zl=10&loc=116653,570000&mloc=116653,570000" style="border: 0"></iframe>
       </section>
       <footer>
         <p>This project is maintained by <a href="https://github.com/LuukS">LuukS</a></p>
