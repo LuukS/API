@@ -72,9 +72,14 @@ Lusc.Api = function(config) {
     this.div = null;
     
     /**
-     * Reference to the graphic for the marker
+     * Reference to the graphic URL for the marker
      */
     this.externalGraphic = null;
+
+    /**
+     * Reference to the graphic radius for the marker
+     */
+    this.pointRadius = null;
     
     /**
      * @private
@@ -184,6 +189,10 @@ Lusc.Api.prototype.validateConfig = function(config) {
     
     if (config.externalGraphic) {
         this.externalGraphic = config.externalGraphic;
+    }
+
+    if (config.pointRadius) {
+        this.pointRadius = config.pointRadius;
     }
     
     if (config.div) {
@@ -346,6 +355,9 @@ Lusc.Api.prototype.createOlMap = function() {
         }
         else if (this.externalGraphic != null){
         	this.styleObj.externalGraphic = this.externalGraphic;
+        }
+        if ((this.pointRadius !=null) && (this.pointRadius > 0)){
+        	this.styleObj.pointRadius = this.pointRadius;
         }
         var markerLayer = new OpenLayers.Layer.Vector('Marker', {
             styleMap: new OpenLayers.StyleMap(this.styleObj)
