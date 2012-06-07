@@ -72,6 +72,11 @@ Lusc.Api = function(config) {
     this.div = null;
     
     /**
+     * Reference to the graphic for the marker
+     */
+    this.externalGraphic = null;
+    
+    /**
      * @private
      * Look up array, having the supported layers.
      */
@@ -177,6 +182,10 @@ Lusc.Api.prototype.validateConfig = function(config) {
         this.tekst = config.tekst;
     }
     
+    if (config.externalGraphic) {
+        this.externalGraphic = config.externalGraphic;
+    }
+    
     if (config.div) {
     	this.div = config.div;
     }
@@ -188,6 +197,9 @@ Lusc.Api.prototype.validateConfig = function(config) {
  * Creates an OpenLayers Map object due to the given config.
  */
 Lusc.Api.prototype.createOlMap = function() {
+    layerList = this.supportedLayers;
+    markerList = this.markers;
+    markerPath = "./markertypes/";
     var olMap = new OpenLayers.Map ({
         controls: [
             new OpenLayers.Control.Attribution(),
@@ -325,12 +337,15 @@ Lusc.Api.prototype.createOlMap = function() {
        var markerGeom = new OpenLayers.Geometry.Point(this.mloc[0], this.mloc[1]);
        var markerFeat = new OpenLayers.Feature.Vector(markerGeom);
        if (this.mt != null){
-	        if (this.mt < this.markers.length){
-		        this.styleObj.externalGraphic = "./markertypes/" + this.markers[parseInt(this.mt)];
+	        if ((this.mt >= 0) && (this.mt < this.markers.length)){
+		        this.styleObj.externalGraphic = markerPath + this.markers[parseInt(this.mt)];
 		    }
 		    else{
-		        this.styleObj.externalGraphic = "./markertypes/" + this.markers[0];
+		        this.styleObj.externalGraphic = markerPath + this.markers[0];
 		    }
+        }
+        else if (this.externalGraphic != null){
+        	this.styleObj.externalGraphic = this.externalGraphic;
         }
         var markerLayer = new OpenLayers.Layer.Vector('Marker', {
             styleMap: new OpenLayers.StyleMap(this.styleObj)
@@ -405,4 +420,15 @@ function onFeatureUnselect(evt) {
         feature.popup.destroy();
         feature.popup = null;
     }
+}
+
+Lusc.Api.prototype.getLayers = function(){
+	return layerList;
+}
+
+Lusc.Api.prototype.getMarkers = function(){
+	return markerList;
+}
+Lusc.Api.prototype.getMarkerPath = function(){
+	return markerPath;
 }
