@@ -44,14 +44,16 @@
 		    externalGraphic: 'http://www.nationaalgeoregister.nl/geonetwork/images/logos/geonovum.jpg',
 		    pointRadius: 20
 		});
-		//Beschikbare kaartlagen: alert(Lusc.Api.prototype.getLayers());
-		//Het pad naar de markertypes: alert(Lusc.Api.prototype.getMarkerPath());
-		//Beschikbare markertypes: alert(Lusc.Api.prototype.getMarkers());
+		//Beschikbare kaartlagen: alert(api.getLayers());
+		//Het pad naar de markertypes: alert(api.getMarkerPath());
+		//Beschikbare markertypes: alert(api.getMarkers());
+		//Pan naar een andere locatie: api.setLocation([100000,400000]);
+		//Zoom naar een ander zoomnivo: api.setZoomLevel(3);
     }
     </script>
     
   </head>
-	<body onload="init()">
+	<body onload="init();">
     <div id="map"></div>
   </body>
 </html>

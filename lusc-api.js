@@ -206,8 +206,6 @@ Lusc.Api.prototype.validateConfig = function(config) {
  * Creates an OpenLayers Map object due to the given config.
  */
 Lusc.Api.prototype.createOlMap = function() {
-    layerList = this.supportedLayers;
-    markerList = this.markers;
     markerPath = "./markertypes/";
     var olMap = new OpenLayers.Map ({
         controls: [
@@ -435,12 +433,20 @@ function onFeatureUnselect(evt) {
 }
 
 Lusc.Api.prototype.getLayers = function(){
-	return layerList;
-}
+	return this.supportedLayers;
+}    
 
 Lusc.Api.prototype.getMarkers = function(){
-	return markerList;
+	return this.markers;
 }
 Lusc.Api.prototype.getMarkerPath = function(){
 	return markerPath;
+}
+
+Lusc.Api.prototype.setLocation = function(loc) {
+	this.map.setCenter (new OpenLayers.LonLat(parseInt(loc[0]), parseInt(loc[1])));
+}
+
+Lusc.Api.prototype.setZoomLevel = function(zl) {
+	this.map.zoomTo (zl);
 }
