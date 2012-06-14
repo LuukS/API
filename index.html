@@ -75,6 +75,10 @@ Bijvoorbeeld: zl=9<BR>
 Hiermee kan een popup met een titel getoond worden indien een marker op de kaart getoond wordt. Deze parameter bevat de titel van de popup<BR>
 <big>tekst</big><BR>
 Hiermee kan een popup van extra tekst voorzien worden indien een marker op de kaart getoond wordt. De popup wordt geopend als op de marker geklikt wordt<BR>
+<big>wmsurl</big><BR>
+Hiermee kan een URL van een WMS opgegevenworden. Als de parameter wmslayers ook is ingevuld zal de WMS aan de kaart worden toegevoegd<BR>
+<big>wmslayers</big><BR>
+Hiermee kan/kunnen de WMS layer(s) opgegeven worden welke aan de kaart moeten worden toegevoegd<BR>
 <h3>Demo URL's:<BR>
 <HR>
 <a HREF="./api.html" target="_blank">Default viewer</a><BR>
@@ -86,6 +90,7 @@ Hiermee kan een popup van extra tekst voorzien worden indien een marker op de ka
 <a HREF="./api.html?mloc=136260,456394&bbox=130000,450000,150000,470000&layer=gemeentegrenzen" target="_blank">Viewer ingezoomd op een bounding box plus de alternatieve opmaak van de gemeentekaart</a><BR>
 <a HREF="./api.html?bbox=158536,304712,221940,343719&layer=AHN25M,gemeentegrenzen_label" target="_blank">Viewer ingezoomd op Limburg plus de AHN en de alternatieve opmaak van de gemeentekaart met labels</a><BR>
 <a HREF="./api.html?loc=176212,317748&zl=8&mloc=176212,317748&mt=4&layer=gemeentegrenzen_label&titel=Maastricht&tekst=Vrijthof" target="_blank">Viewer ingezoomd op Maastricht plus de alternatieve opmaak van de gemeentekaart met labels en een popup</a><BR>
+<a HREF="./api.html?loc=176212,317748&zl=8&mloc=176212,317748&mt=4&titel=Maastricht&tekst=Vrijthof%3CBR%3E%3Cimg%20src%3D%22http%3A%2F%2Fwww.wigosite.nl%2FMaastrichtoudeprenten%2FV-10_Maastricht_Vrijthof_01_425_v.jpg%22%3E%3CBR%3ELegenda%20snelwegen%3A%3CBR%3E%3Cimg%20src%3D%22http%3A%2F%2Fgeodata.nationaalgeoregister.nl%2Fweggeg%2Fwms%3FTRANSPARENT%3Dtrue%26SERVICE%3DWMS%26VERSION%3D1.1.1%26REQUEST%3DGetLegendGraphic%26LAYER%3Dweggegmaximumsnelheden%26FORMAT%3Dimage%252Fgif%22%3E&wmsurl=http://geodata.nationaalgeoregister.nl/weggeg/wms&wmslayers=weggegmaximumsnelheden" target="_blank">Viewer ingezoomd op Maastricht plus een popup. Tevens wordt de WMS met toegestane snelheden geladen in de kaart</a><BR>
 <a HREF="./api-via-javascript.html" target="_blank">Viewer ingezoomd op coordinaat 150.000,450.000, met een custom-marker en een custom popup met images (dit kan alleen via JavaScript)</a><BR>
 </H3>
 <HR>
