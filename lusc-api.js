@@ -260,7 +260,7 @@ Lusc.Api.prototype.createOlMap = function() {
 					var layer = new OpenLayers.Layer.WMS.Untiled(
 							"AAN",
 							"http://geodata.nationaalgeoregister.nl/aan/wms",
-							{layers: 'aan',transparent: 'true',format: "image/gif"},
+							{layers: 'aan',transparent: 'true',format: "image/png"},
 							{visibility: true,isBaseLayer:false},
 							{singleTile: true}
 					);
@@ -270,7 +270,7 @@ Lusc.Api.prototype.createOlMap = function() {
 					var layer = new OpenLayers.Layer.WMS.Untiled(
 							"AHN25M",
 							"http://geodata.nationaalgeoregister.nl/ahn25m/wms",
-							{layers: 'ahn25m',transparent: 'true',format: "image/gif"},
+							{layers: 'ahn25m',transparent: 'true',format: "image/png"},
 							{visibility: true,isBaseLayer:false},
 							{singleTile: true}
 					);
@@ -280,7 +280,7 @@ Lusc.Api.prototype.createOlMap = function() {
 					var layer = new OpenLayers.Layer.WMS.Untiled(
 							"Gemeentegrenzen",
 							"http://geodata.nationaalgeoregister.nl/bestuurlijkegrenzen/wms?sld=http://luuks.github.com/API/gemeentegrenzen_grijs_gestippeld.sld",
-							{layers: 'gemeenten_2012',transparent: 'true',format: "image/gif"},
+							{layers: 'gemeenten_2012',transparent: 'true',format: "image/png"},
 							{visibility: true,isBaseLayer:false},
 							{singleTile: true}
 					);
@@ -290,7 +290,7 @@ Lusc.Api.prototype.createOlMap = function() {
 					var layer = new OpenLayers.Layer.WMS.Untiled(
 							"Gemeentegrenzen",
 							"http://geodata.nationaalgeoregister.nl/bestuurlijkegrenzen/wms?sld=http://luuks.github.com/API/gemeentegrenzen_label_grijs_gestippeld.sld",
-							{layers: 'gemeenten_2012',transparent: 'true',format: "image/gif"},
+							{layers: 'gemeenten_2012',transparent: 'true',format: "image/png"},
 							{visibility: true,isBaseLayer:false},
 							{singleTile: true}
 					);
@@ -300,7 +300,7 @@ Lusc.Api.prototype.createOlMap = function() {
 					var layer = new OpenLayers.Layer.WMS.Untiled(
 							"Nationale parken",
 							"http://geodata.nationaalgeoregister.nl/nationaleparken/wms",
-							{layers: 'nationaleparken',transparent: 'true',format: "image/gif"},
+							{layers: 'nationaleparken',transparent: 'true',format: "image/png"},
 							{visibility: true,isBaseLayer:false},
 							{singleTile: true}
 					);
@@ -310,7 +310,7 @@ Lusc.Api.prototype.createOlMap = function() {
 					var layer = new OpenLayers.Layer.WMS.Untiled(
 							"NOK2011",
 							"http://geodata.nationaalgeoregister.nl/nok2011/wms",
-							{layers: 'begrenzing,planologischeehs,verwervinginrichting',transparent: 'true',format: "image/gif"},
+							{layers: 'begrenzing,planologischeehs,verwervinginrichting',transparent: 'true',format: "image/png"},
 							{visibility: true,isBaseLayer:false},
 							{singleTile: true}
 					);
@@ -320,7 +320,7 @@ Lusc.Api.prototype.createOlMap = function() {
 					var layer = new OpenLayers.Layer.WMS.Untiled(
 							"Gevectoriseerde Bonnebladen",
 							"http://mapserver.sara.nl/bonne_vect/cgi-bin/mapserv?map=bonne_vect_texel.map", 
-							{layers: 'TEXEL_20120423',transparent: 'true',format: "image/gif"},
+							{layers: 'TEXEL_20120423',transparent: 'true',format: "image/png"},
 							{visibility: true,isBaseLayer:false},
 							{singleTile: true}
 					);
@@ -330,7 +330,7 @@ Lusc.Api.prototype.createOlMap = function() {
 					var layer = new OpenLayers.Layer.WMS.Untiled(
 							"Gevectoriseerde Bonnebladen",
 							"http://mapserver.sara.nl/bonne_vect/cgi-bin/mapserv?map=bonne_vect_texel.map", 
-							{layers: 'TEXEL_20120423_OUTLINE',transparent: 'true',format: "image/gif"},
+							{layers: 'TEXEL_20120423_OUTLINE',transparent: 'true',format: "image/png"},
 							{visibility: true,isBaseLayer:false},
 							{singleTile: true},
 							{
@@ -352,7 +352,7 @@ Lusc.Api.prototype.createOlMap = function() {
 		var lyrWMS = new OpenLayers.Layer.WMS.Untiled(
 				this.wmslayers,
 				this.wmsurl, 
-				{layers: this.wmslayers,transparent: 'true',format: "image/gif"},
+				{layers: this.wmslayers,transparent: 'true',format: "image/png"},
 				{visibility: true,isBaseLayer:false},
 				{singleTile: true}
 		);
