@@ -66,6 +66,7 @@ Momenteel worden de volgende kaartlagen gebruikt:<BR>
 - NOK2011,<BR>
 - TEXEL_20120423 (dit is een kaart van Texel met de gevectoriseerde Bonnebladen),<BR>
 - TEXEL_20120423_OUTLINE (dit is een kaart van Texel met de gevectoriseerde Bonnebladen)<BR>
+- TOP10NL (dit is de TMS met de TOP10NL)
 Bijvoorbeeld: layer=AAN,NATIONALE_PARKEN,TEXEL_20120423_OUTLINE<BR>
 De laag welke vooraan in de lijst staat is de onderste laag. Dat betekent dat in het bovenstaande voorbeeld onderop de AAN laag weergegeven wordt, dan de Nationale Parken en dan de omlijning van de gevectoriseerde Bonnebladen.<BR>
 <big>zl</big><BR>
@@ -76,15 +77,21 @@ Hiermee kan een popup met een titel getoond worden indien een marker op de kaart
 <big>tekst</big><BR>
 Hiermee kan een popup van extra tekst voorzien worden indien een marker op de kaart getoond wordt. De popup wordt geopend als op de marker geklikt wordt<BR>
 <big>wmsurl</big><BR>
-Hiermee kan een URL van een WMS opgegevenworden. Als de parameter wmslayers ook is ingevuld zal de WMS aan de kaart worden toegevoegd<BR>
+Hiermee kan een URL van een WMS opgegeven worden. Als de parameter wmslayers ook is ingevuld zal de WMS aan de kaart worden toegevoegd<BR>
 <big>wmslayers</big><BR>
 Hiermee kan/kunnen de WMS layer(s) opgegeven worden welke aan de kaart moeten worden toegevoegd<BR>
+<big>tmsurl</big><BR>
+Hiermee kan de URL van een TMS opgegeven worden. Als de parameter tmslayer ook is ingevuld zal de TMS aan de kaart worden toegevoegd<BR>
+<big>tmslayer</big><BR>
+Hiermee kan de TMS layer opgegeven worden welke aan de kaart moet worden toegevoegd<BR>
 <h3>Demo URL's:<BR>
 <HR>
 <a HREF="./api.html" target="_blank">Default viewer</a><BR>
 <a HREF="./api.html?mloc=136260,456394" target="_blank">Viewer met een marker op de locatie van het nieuwe DLG kantoor in Utrecht</a><BR>
 <a HREF="./api.html?loc=136260,456394&zl=12" target="_blank">Viewer ingezoomd naar nivo 12 en de bovenstaande locatie</a><BR>
+<a HREF="./api.html?loc=136260,456394&zl=12&layer=TOP10NL" target="_blank">Viewer ingezoomd naar nivo 12 en de bovenstaande locatie met de TOP10NL</a><BR>
 <a HREF="./api.html?loc=136260,456394&zl=12&mloc=136260,456394" target="_blank">Bovenstaande viewer met marker op de locatie</a><BR>
+<a HREF="./api.html?loc=195000,530000&zl=9&tmsurl=http://geodata.nationaalgeoregister.nl/tms/&tmslayer=nok2011" target="_blank">Viewer ingezoomd op de Weerribben naar nivo 9 en de NOK2011 als TMS toegevoegd aan de kaart</a><BR>
 <a HREF="./api.html?mloc=116653,565299&loc=116653,565299&zl=10&layer=TEXEL_20120423_OUTLINE" target="_blank">Viewer met een marker op Texel, ingezoomd naar nivo 8 en de outline van de Bonnebladen</a><BR>
 <a HREF="./api.html?mloc=136260,456394&bbox=130000,450000,150000,470000&layer=gemeentegrenzen" target="_blank">Viewer ingezoomd op een bounding box plus de alternatieve opmaak van de gemeentekaart</a><BR>
 <a HREF="./api.html?mloc=136260,456394&bbox=130000,450000,150000,470000&layer=gemeentegrenzen" target="_blank">Viewer ingezoomd op een bounding box plus de alternatieve opmaak van de gemeentekaart</a><BR>

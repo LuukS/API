@@ -77,6 +77,16 @@ Lusc.Api = function(config) {
     this.wmslayers = null;
 
     /**
+     * Reference to TMS-URL object
+     */
+    this.tmsurl = null;
+
+    /**
+     * Reference to TMS layer object
+     */
+    this.tmslayer = null;
+
+    /**
      * Reference to the DIV-id the map should be rendered in
      */
     this.div = null;
@@ -95,7 +105,17 @@ Lusc.Api = function(config) {
      * @private
      * Look up array, having the supported layers.
      */
-    this.supportedLayers = ["AAN","AHN25M","GEMEENTEGRENZEN","GEMEENTEGRENZEN_LABEL","NATIONALE_PARKEN","NOK2011","TEXEL_20120423","TEXEL_20120423_OUTLINE"];
+    this.supportedLayers = [
+    	"AAN",
+    	"AHN25M",
+    	"GEMEENTEGRENZEN",
+    	"GEMEENTEGRENZEN_LABEL",
+    	"NATIONALE_PARKEN",
+    	"NOK2011",
+    	"TEXEL_20120423",
+    	"TEXEL_20120423_OUTLINE",
+    	"TOP10NL"
+    ];
 
     /**
      * @private
@@ -203,6 +223,14 @@ Lusc.Api.prototype.validateConfig = function(config) {
 
     if (config.wmslayers) {
         this.wmslayers = config.wmslayers;
+    }
+
+    if (config.tmsurl) {
+        this.tmsurl = config.tmsurl;
+    }
+
+    if (config.tmslayer) {
+        this.tmslayer = config.tmslayer;
     }
 
     if (config.externalGraphic) {
@@ -339,6 +367,14 @@ Lusc.Api.prototype.createOlMap = function() {
 					);
 					olMap.addLayer(layer);
 					break;
+				case "TOP10NL":
+					var layer = new OpenLayers.Layer.TMS(
+						"TOP10NL",
+						"http://geodata.nationaalgeoregister.nl/tms/",
+						{layername: "top10nl", type:"png8", visibility: true, isBaseLayer:false}
+					);
+					olMap.addLayer(layer);
+					break;
 				default:
 					//do nothing
 					var layer;
@@ -357,6 +393,16 @@ Lusc.Api.prototype.createOlMap = function() {
 				{singleTile: true}
 		);
         olMap.addLayer(lyrWMS);
+	}
+
+    // apply TMSURL and TMSLAYERS if applicable
+	if ((this.tmsurl != null) && (this.tmslayer != null)) {
+		var layer = new OpenLayers.Layer.TMS(
+			this.tmslayer,
+			this.tmsurl,
+			{layername: this.tmslayer, type:"png", visibility: true, isBaseLayer:false, opacity:0.8}
+		);
+		olMap.addLayer(layer);
 	}
 
     // apply BBOX or zoomlevel and location
@@ -490,4 +536,63 @@ Lusc.Api.prototype.reprojectWGS84toRD = function(lat,lon){
             new OpenLayers.Projection("EPSG:28992") // new RD
         );
 	return(pointRD);
+}
+
+Lusc.Api.prototype.addMarker = function(mloc,mt,titel,tekst,externalGraphic,pointRadius) {
+    if (mloc != null) {
+	   var markerGeom = new OpenLayers.Geometry.Point(mloc[0],mloc[1]);
+	   var markerFeat = new OpenLayers.Feature.Vector(markerGeom);
+       var objStyle = {
+			strokeColor : '#ee0028',
+			strokeWidth : 1,
+			strokeOpacity : 1,
+			fillColor : '#ee000d',
+			fillOpacity : 1,
+			pointRadius : 12,
+			externalGraphic: './markertypes/default.png'
+       };
+       if (mt != null){
+	        if ((mt >= 0) && (mt < this.markers.length)){
+		        objStyle.externalGraphic = markerPath + this.markers[parseInt(mt)];
+		    }
+		    else{
+		        objStyle.externalGraphic = markerPath + this.markers[0];
+		    }
+        }
+        else if (externalGraphic != null){
+        	objStyle.externalGraphic = externalGraphic;
+        }
+        if ((pointRadius !=null) && (pointRadius > 0)){
+        	objStyle.pointRadius = pointRadius;
+        }
+        else{
+        	objStyle.pointRadius = 12;
+        }
+        var markerLayer = new OpenLayers.Layer.Vector('Marker', {
+            styleMap: new OpenLayers.StyleMap(objStyle)
+        });
+
+	    // add popup if the parameters titel or tekst are used
+	    if (titel != null || tekst != null) {
+	    	strOms = "";
+	    	if (titel != null){
+		    	strOms = "<h2>" + titel + "</h2>";
+	    	}
+	    	if (tekst != null){
+		    	strOms = strOms + tekst;
+	    	}
+	    	markerFeat.attributes.oms = strOms;
+	    	// Interaction; not needed for initial display.
+            selectControl = new OpenLayers.Control.SelectFeature(markerLayer);
+            this.map.addControl(selectControl);
+            selectControl.activate();
+            markerLayer.events.on({
+                'featureselected': onFeatureSelect,
+                'featureunselected': onFeatureUnselect
+            });
+		}
+
+        this.map.addLayer(markerLayer);
+        markerLayer.addFeatures([markerFeat]);
+    }
 }
