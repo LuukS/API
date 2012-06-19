@@ -540,9 +540,10 @@ Lusc.Api.prototype.reprojectWGS84toRD = function(lat,lon){
 
 Lusc.Api.prototype.addMarker = function(mloc,mt,titel,tekst,externalGraphic,pointRadius) {
     if (mloc != null) {
-	   var markerGeom = new OpenLayers.Geometry.Point(mloc[0],mloc[1]);
-	   var markerFeat = new OpenLayers.Feature.Vector(markerGeom);
-       var objStyle = {
+	   // Bij een bestaande markerlayer moet de markerfeature een andere icon krijgen
+	   var pntMarkerGeom = new OpenLayers.Geometry.Point(mloc[0],mloc[1]);
+	   var vctMarkerFeat = new OpenLayers.Feature.Vector(pntMarkerGeom);
+       var styObjStyle = {
 			strokeColor : '#ee0028',
 			strokeWidth : 1,
 			strokeOpacity : 1,
@@ -551,27 +552,49 @@ Lusc.Api.prototype.addMarker = function(mloc,mt,titel,tekst,externalGraphic,poin
 			pointRadius : 12,
 			externalGraphic: './markertypes/default.png'
        };
+       var markerStyle = {
+			strokeColor : '#ee0028',
+			strokeWidth : 1,
+			strokeOpacity : 1,
+			fillColor : '#ee000d',
+			fillOpacity : 1,
+			pointRadius : 12,
+       };
        if (mt != null){
 	        if ((mt >= 0) && (mt < this.markers.length)){
-		        objStyle.externalGraphic = markerPath + this.markers[parseInt(mt)];
+		        styObjStyle.externalGraphic = markerPath + this.markers[parseInt(mt)];
+		        markerStyle.externalGraphic = markerPath + this.markers[parseInt(mt)];
 		    }
 		    else{
-		        objStyle.externalGraphic = markerPath + this.markers[0];
+		        styObjStyle.externalGraphic = markerPath + this.markers[0];
+		        markerStyle.externalGraphic = markerPath + this.markers[0];
 		    }
         }
         else if (externalGraphic != null){
-        	objStyle.externalGraphic = externalGraphic;
+        	styObjStyle.externalGraphic = externalGraphic;
+        	markerStyle.externalGraphic = externalGraphic;
         }
         if ((pointRadius !=null) && (pointRadius > 0)){
-        	objStyle.pointRadius = pointRadius;
+        	styObjStyle.pointRadius = pointRadius;
+        	markerStyle.pointRadius = pointRadius;
         }
         else{
-        	objStyle.pointRadius = 12;
+        	styObjStyle.pointRadius = 12;
+        	markerStyle.pointRadius = 12;
         }
-        var markerLayer = new OpenLayers.Layer.Vector('Marker', {
-            styleMap: new OpenLayers.StyleMap(objStyle)
-        });
-
+        if (this.map.getLayersByClass("OpenLayers.Layer.Vector").length > 0){
+        	var markerLayer = this.map.getLayersByClass("OpenLayers.Layer.Vector")[0];
+        }
+        else{
+	        var markerLayer = new OpenLayers.Layer.Vector('Marker', {
+	            styleMap: new OpenLayers.StyleMap(markerStyle)
+    	    });
+	        this.map.addLayer(markerLayer);
+            selectControl = new OpenLayers.Control.SelectFeature(markerLayer);
+            this.map.addControl(selectControl);
+            selectControl.activate();
+        }
+        
 	    // add popup if the parameters titel or tekst are used
 	    if (titel != null || tekst != null) {
 	    	strOms = "";
@@ -581,18 +604,14 @@ Lusc.Api.prototype.addMarker = function(mloc,mt,titel,tekst,externalGraphic,poin
 	    	if (tekst != null){
 		    	strOms = strOms + tekst;
 	    	}
-	    	markerFeat.attributes.oms = strOms;
-	    	// Interaction; not needed for initial display.
-            selectControl = new OpenLayers.Control.SelectFeature(markerLayer);
-            this.map.addControl(selectControl);
-            selectControl.activate();
+	    	vctMarkerFeat.attributes.oms = strOms;
             markerLayer.events.on({
                 'featureselected': onFeatureSelect,
                 'featureunselected': onFeatureUnselect
             });
 		}
-
-        this.map.addLayer(markerLayer);
-        markerLayer.addFeatures([markerFeat]);
+        //markerLayer.addFeatures([vctMarkerFeat]);
+        //var markerStyle = {externalGraphic: "./markertypes/default.png", graphicWidth: 16, graphicHeight: 16, graphicYOffset: -16, graphicOpacity: 0.7};
+        markerLayer.addFeatures([new OpenLayers.Feature.Vector(pntMarkerGeom, {oms: strOms}, markerStyle)]);
     }
 }
