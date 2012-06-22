@@ -65,6 +65,11 @@ Lusc.Api = function(config) {
      * Reference to markertype object
      */
     this.tekst = null;
+
+    /**
+     * Reference to Textfile URL object
+     */
+    this.txturl = null;
     
     /**
      * Reference to WMS-URL object
@@ -217,6 +222,10 @@ Lusc.Api.prototype.validateConfig = function(config) {
         this.tekst = config.tekst;
     }
     
+    if (config.txturl) {
+        this.txturl = config.txturl;
+    }
+
     if (config.wmsurl) {
         this.wmsurl = config.wmsurl;
     }
@@ -414,6 +423,13 @@ Lusc.Api.prototype.createOlMap = function() {
     } else {
         olMap.zoomToMaxExtent();
     }
+
+    // add text layer based upon an URL where a text file is served
+    if (this.txturl != null) {
+		//var lyrText = new OpenLayers.Layer.Text( "text", {location: this.txturl} );
+		//olMap.addLayer(lyrText);
+		OpenLayers.loadURL(this.txturl, [], this, showGeometries);
+  	}
     
     // add marker and use markertype if given, otherwise the default marker
     if (this.mloc != null) {
@@ -471,6 +487,11 @@ Lusc.Api.prototype.createOlMap = function() {
 Lusc.Api.prototype.getMapObject = function() {
 	return this.map;
 }
+
+function showGeometries(response) {
+	alert(response.responseText);
+}
+
 
 /**
  * Interaction functionality for clicking on the marker
