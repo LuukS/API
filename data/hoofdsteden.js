@@ -6,7 +6,7 @@ featurecollection = {
                     "geometries": [
                         {
                             "type":"Point", 
-                            "coordinates":[582378, 233571]
+                            "coordinates":[183023, 579910]
                         },
                         {
                             "type":"Point", 

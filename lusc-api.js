@@ -225,7 +225,7 @@ Lusc.Api.prototype.validateConfig = function(config) {
     if (config.txturl) {
         this.txturl = config.txturl;
     }
-
+    
     if (config.wmsurl) {
         this.wmsurl = config.wmsurl;
     }
@@ -275,8 +275,44 @@ Lusc.Api.prototype.createOlMap = function() {
         units: 'm',
         projection: new OpenLayers.Projection("EPSG:28992"),
         div: (this.div != null) ? this.div : 'map'
-      });
-    
+    });
+    var toolListeners = {
+		"activate": toolActivate,
+		"deactivate": toolDeactivate
+	};
+	function toolActivate(event) {
+//Uitzetten van het selecteerbaarmaken van de RESTORE landen
+selectControl.deactivate();
+}
+function toolDeactivate(event) {
+//Aanzetten van het selecteerbaarmaken van de RESTORE landen
+selectControl.activate();
+} 
+	function openLufo(){
+		alert("Test");
+	}
+    var panel = new OpenLayers.Control.Panel();
+	var openBRT = new OpenLayers.Control({
+		title:"Toon de BRT Achtergrondkaart als ondergrond",
+		type: OpenLayers.Control.TYPE_BUTTON,
+		trigger: openBRT,
+		displayClass: "openBRT"
+	});
+	var openTOP10 = new OpenLayers.Control({
+		title:"Toon de TOP10NL als ondergrond",
+		type: OpenLayers.Control.TYPE_BUTTON,
+		trigger: openTOP10,
+		displayClass: "openTOP10"
+	});
+	var openLufo = new OpenLayers.Control({
+		title:"Toon de luchtfoto's als ondergrond",
+		type: OpenLayers.Control.TYPE_BUTTON,
+		trigger: openLufo,
+		displayClass: "openLufo"
+	});
+
+	panel.addControls([openBRT,openTOP10,openLufo]);
+	olMap.addControl(panel);
     
     // create TMS
 	lyrBRTAchtergrondkaart = new OpenLayers.Layer.TMS(
@@ -414,6 +450,12 @@ Lusc.Api.prototype.createOlMap = function() {
 		olMap.addLayer(layer);
 	}
 
+    // apply TXTURL if applicable
+	if (this.txturl != null) {
+		var lyrTextLayer = new OpenLayers.Layer.Text( "Textlayer", {location: this.txturl} );
+		olMap.addLayer(lyrTextLayer);
+	}
+
     // apply BBOX or zoomlevel and location
     if (this.bbox != null) {
         olMap.zoomToExtent(OpenLayers.Bounds.fromArray(this.bbox).transform(olMap.displayProjection, olMap.getProjectionObject()));
@@ -423,13 +465,6 @@ Lusc.Api.prototype.createOlMap = function() {
     } else {
         olMap.zoomToMaxExtent();
     }
-
-    // add text layer based upon an URL where a text file is served
-    if (this.txturl != null) {
-		//var lyrText = new OpenLayers.Layer.Text( "text", {location: this.txturl} );
-		//olMap.addLayer(lyrText);
-		OpenLayers.loadURL(this.txturl, [], this, showGeometries);
-  	}
     
     // add marker and use markertype if given, otherwise the default marker
     if (this.mloc != null) {
@@ -488,10 +523,29 @@ Lusc.Api.prototype.getMapObject = function() {
 	return this.map;
 }
 
-function showGeometries(response) {
-	alert(response.responseText);
+Lusc.Api.prototype.addGeometries = function(featurecollection){
+	var geojson_format = new OpenLayers.Format.GeoJSON();
+	var vector_layer = new OpenLayers.Layer.Vector(); 
+	this.map.addLayer(vector_layer);
+	vector_layer.addFeatures(geojson_format.read(featurecollection));
 }
 
+function openBRT(){
+	alert("opeBRT");
+	//replaceCountriesLayer();
+}
+
+function openTOP10(){
+	alert("openTOP10");
+	//replaceCountriesLayer();
+}
+
+function openLufo(){
+	alert("Momenteel zijn er nog geen luchtfoto's beschikbaar bij PDOK");
+}
+
+function replaceCountriesLayer(){
+}
 
 /**
  * Interaction functionality for clicking on the marker
