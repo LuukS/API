@@ -276,43 +276,43 @@ Lusc.Api.prototype.createOlMap = function() {
         projection: new OpenLayers.Projection("EPSG:28992"),
         div: (this.div != null) ? this.div : 'map'
     });
-    var toolListeners = {
-		"activate": toolActivate,
-		"deactivate": toolDeactivate
-	};
-	function toolActivate(event) {
+    //var toolListeners = {
+	//	"activate": toolActivate,
+	//	"deactivate": toolDeactivate
+	//};
+	//function toolActivate(event) {
 //Uitzetten van het selecteerbaarmaken van de RESTORE landen
-selectControl.deactivate();
-}
-function toolDeactivate(event) {
+//selectControl.deactivate();
+//}
+//function toolDeactivate(event) {
 //Aanzetten van het selecteerbaarmaken van de RESTORE landen
-selectControl.activate();
-} 
-	function openLufo(){
-		alert("Test");
-	}
-    var panel = new OpenLayers.Control.Panel();
-	var openBRT = new OpenLayers.Control({
-		title:"Toon de BRT Achtergrondkaart als ondergrond",
-		type: OpenLayers.Control.TYPE_BUTTON,
-		trigger: openBRT,
-		displayClass: "openBRT"
-	});
-	var openTOP10 = new OpenLayers.Control({
-		title:"Toon de TOP10NL als ondergrond",
-		type: OpenLayers.Control.TYPE_BUTTON,
-		trigger: openTOP10,
-		displayClass: "openTOP10"
-	});
-	var openLufo = new OpenLayers.Control({
-		title:"Toon de luchtfoto's als ondergrond",
-		type: OpenLayers.Control.TYPE_BUTTON,
-		trigger: openLufo,
-		displayClass: "openLufo"
-	});
+//selectControl.activate();
+//} 
+//	function openLufo(){
+//		alert("Test");
+//	}
+//    var panel = new OpenLayers.Control.Panel();
+//	var openBRT = new OpenLayers.Control({
+//		title:"Toon de BRT Achtergrondkaart als ondergrond",
+//		type: OpenLayers.Control.TYPE_BUTTON,
+//		trigger: openBRT,
+//		displayClass: "openBRT"
+//	});
+//	var openTOP10 = new OpenLayers.Control({
+//		title:"Toon de TOP10NL als ondergrond",
+//		type: OpenLayers.Control.TYPE_BUTTON,
+//		trigger: openTOP10,
+//		displayClass: "openTOP10"
+//	});
+//	var openLufo = new OpenLayers.Control({
+//		title:"Toon de luchtfoto's als ondergrond",
+//		type: OpenLayers.Control.TYPE_BUTTON,
+//		trigger: openLufo,
+//		displayClass: "openLufo"
+//	});
 
-	panel.addControls([openBRT,openTOP10,openLufo]);
-	olMap.addControl(panel);
+	//panel.addControls([openBRT,openTOP10,openLufo]);
+	//olMap.addControl(panel);
     
     // create TMS
 	lyrBRTAchtergrondkaart = new OpenLayers.Layer.TMS(
