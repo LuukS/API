@@ -3,10 +3,11 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
     <meta name="apple-mobile-web-app-capable" content="yes">
-    <title>Lusc API via JavaScript</title>
+    <title>Lusc API via JavaScript - Toevoegen TextLayer met locaties, popup en marker</title>
     
     <link rel="stylesheet" href="./styles/default/style.css" type="text/css">
     <link rel="stylesheet" href="style.css" type="text/css">
+    <link rel="stylesheet" href="api-style.css" type="text/css">
     
     <style type="text/css">
       html {
@@ -33,42 +34,6 @@
 		filter: alpha(opacity=0); /* IE */
 		visibility: hidden;
 	}
-	.olControlPanel {
-		display: block;
-		width: 24px;
-		height: 24px;
-		margin: 1px;
-		float: left;
-		top: 125px;
-		left: 16px;
-	}
-	.openBRT {
-		background:url("./img/close.gif");
-		background-position: center;
-		background-repeat: no-repeat;
-		height: 18px;
-		left: 12px;
-		top: 60px;
-		width: 18px;
-	}
-	.openTOP10 {
-		background:url("./img/close.gif");
-		background-position: center;
-		background-repeat: no-repeat;
-		height: 18px;
-		left: 12px;
-		top: 80px;
-		width: 18px;
-	}
-	.openLufo {
-		background:url("./img/close.gif");
-		background-position: center;
-		background-repeat: no-repeat;
-		height: 18px;
-		left: 12px;
-		top: 100px;
-		width: 18px;
-	}
     </style>
     
     <script src="./OpenLayers.js"></script>
@@ -78,7 +43,9 @@
     var api = null;
     function init() {
          api = new Lusc.Api({
-			txturl: "./data/textfile.txt"
+			txturl: "./data/textfile.txt",
+			layer: "natura2000",
+			ls: true
 		});
 		//Beschikbare kaartlagen: alert(api.getLayers());
 		//Het pad naar de markertypes: alert(api.getMarkerPath());

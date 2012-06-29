@@ -84,9 +84,14 @@ Hiermee kan/kunnen de WMS layer(s) opgegeven worden welke aan de kaart moeten wo
 Hiermee kan de URL van een TMS opgegeven worden. Als de parameter tmslayer ook is ingevuld zal de TMS aan de kaart worden toegevoegd<BR>
 <big>tmslayer</big><BR>
 Hiermee kan de TMS layer opgegeven worden welke aan de kaart moet worden toegevoegd<BR>
+<big>tmstype</big><BR>
+Hiermee kan de extensie opgegeven worden van de plaatjes van de TMS (voor PDOK services is dit png8, andere mogelijkheden zijn bijvoorbeeld png, jpg of jpeg)<BR>
+<big>ls</big><BR>
+Hiermee kan aangegeven worden dat op de kaart een layerswitch getoond wordt, hiermee kan gekozen worden om de Luchtfoto's (echter pas als deze beschikbaar zijn), de TOP10NL of de BRT Achtergrondkaart als ondergrond gebruikt worden<BR>
 <h3>Demo URL's:<BR>
 <HR>
 <a HREF="./api.html" target="_blank">Default viewer</a><BR>
+<a HREF="./api.html?ls=true" target="_blank">Default viewer met de layerswitch</a><BR>
 <a HREF="./api.html?mloc=136260,456394" target="_blank">Viewer met een marker op de locatie van het nieuwe DLG kantoor in Utrecht</a><BR>
 <a HREF="./api.html?loc=136260,456394&zl=12" target="_blank">Viewer ingezoomd naar nivo 12 en de bovenstaande locatie</a><BR>
 <a HREF="./api.html?loc=136260,456394&zl=12&layer=TOP10NL" target="_blank">Viewer ingezoomd naar nivo 12 en de bovenstaande locatie met de TOP10NL</a><BR>
@@ -102,6 +107,9 @@ Hiermee kan de TMS layer opgegeven worden welke aan de kaart moet worden toegevo
 <h3>Demo html pagina's met JavaScript-include:<BR>
 <a HREF="./api-via-javascript.html" target="_blank">Viewer ingezoomd op coordinaat 150.000,450.000, met een custom-marker en een custom popup met images (dit kan alleen via JavaScript)</a><BR>
 <a HREF="./api-via-javascript-add-wms.html" target="_blank">Viewer welke inzoomt op Harlingen en de NOK2011 en de bevaarbaarheid van de Vaarwegen in Nederland laat zien. De legenda wordt in de popup getoond</a><BR>
+<a HREF="./api-via-javascript-add-wms-via-function.html" target="_blank">Viewer welke inzoomt op Amstelveen en een WMS van QGISCloud via een functie toevoegd aan de kaart</a><BR>
+<a HREF="./api-via-javascript-add-tms-via-function.html" target="_blank">Viewer welke inzoomt op IJmuiden en de TOP10NL toevoegt aan de kaart</a><BR>
+<a HREF="./api-via-javascript-add-textlayer.html" target="_blank">Viewer welke de layerswitch toont, plus de Natura2000 en een yab-gescheiden textbestand (volgens het formaat:point	title	description	icon)</a><BR>
 </H3>
 <HR>
       </section>
