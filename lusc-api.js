@@ -754,3 +754,110 @@ Lusc.Api.prototype.addTMS = function(tmsurl,tmslayer,tmstype) {
         this.map.addLayer(lyrTMS);
 	}
 }
+
+Lusc.Api.prototype.addLayers = function(arrLayerNames){
+	if (arrLayerNames != null) {
+		var layer = null;
+		var l;
+		for (l in arrLayerNames)
+		{
+			switch (arrLayerNames[l].toUpperCase()){
+				case "AAN":
+					var layer = new OpenLayers.Layer.WMS.Untiled(
+							"AAN",
+							"http://geodata.nationaalgeoregister.nl/aan/wms",
+							{layers: 'aan',transparent: 'true',format: "image/png"},
+							{visibility: true,isBaseLayer:false},
+							{singleTile: true}
+					);
+					this.map.addLayer(layer);
+					break;
+				case "AHN25M":
+					var layer = new OpenLayers.Layer.WMS.Untiled(
+							"AHN25M",
+							"http://geodata.nationaalgeoregister.nl/ahn25m/wms",
+							{layers: 'ahn25m',transparent: 'true',format: "image/png"},
+							{visibility: true,isBaseLayer:false},
+							{singleTile: true}
+					);
+					this.map.addLayer(layer);
+					break;
+				case "GEMEENTEGRENZEN":
+					var layer = new OpenLayers.Layer.WMS.Untiled(
+							"Gemeentegrenzen",
+							"http://geodata.nationaalgeoregister.nl/bestuurlijkegrenzen/wms?sld=http://luuks.github.com/API/gemeentegrenzen_grijs_gestippeld.sld",
+							{layers: 'gemeenten_2012',transparent: 'true',format: "image/png"},
+							{visibility: true,isBaseLayer:false},
+							{singleTile: true}
+					);
+					this.map.addLayer(layer);
+					break;
+				case "GEMEENTEGRENZEN_LABEL":
+					var layer = new OpenLayers.Layer.WMS.Untiled(
+							"Gemeentegrenzen",
+							"http://geodata.nationaalgeoregister.nl/bestuurlijkegrenzen/wms?sld=http://luuks.github.com/API/gemeentegrenzen_label_grijs_gestippeld.sld",
+							{layers: 'gemeenten_2012',transparent: 'true',format: "image/png"},
+							{visibility: true,isBaseLayer:false},
+							{singleTile: true}
+					);
+					this.map.addLayer(layer);
+					break;
+				case "NATIONALE_PARKEN":
+					var layer = new OpenLayers.Layer.WMS.Untiled(
+							"Nationale parken",
+							"http://geodata.nationaalgeoregister.nl/nationaleparken/wms",
+							{layers: 'nationaleparken',transparent: 'true',format: "image/png"},
+							{visibility: true,isBaseLayer:false},
+							{singleTile: true}
+					);
+					this.map.addLayer(layer);
+					break;
+				case "NATURA2000":
+					var layer = new OpenLayers.Layer.TMS(
+						"NATURA2000",
+						"http://geodata.nationaalgeoregister.nl/tms/",
+						{layername: "natura2000", type:"png8", visibility: true, isBaseLayer:false, opacity:0.8}
+					);
+					this.map.addLayer(layer);
+					break;
+				case "NOK2011":
+					var layer = new OpenLayers.Layer.WMS.Untiled(
+							"NOK2011",
+							"http://geodata.nationaalgeoregister.nl/nok2011/wms",
+							{layers: 'begrenzing,planologischeehs,verwervinginrichting',transparent: 'true',format: "image/png"},
+							{visibility: true,isBaseLayer:false},
+							{singleTile: true}
+					);
+					this.map.addLayer(layer);
+					break;
+				case "TEXEL_20120423":
+					var layer = new OpenLayers.Layer.WMS.Untiled(
+							"Gevectoriseerde Bonnebladen",
+							"http://mapserver.sara.nl/bonne_vect/cgi-bin/mapserv?map=bonne_vect_texel.map", 
+							{layers: 'TEXEL_20120423',transparent: 'true',format: "image/png"},
+							{visibility: true,isBaseLayer:false},
+							{singleTile: true}
+					);
+					this.map.addLayer(layer);
+					break;
+				case "TEXEL_20120423_OUTLINE":
+					var layer = new OpenLayers.Layer.WMS.Untiled(
+							"Gevectoriseerde Bonnebladen",
+							"http://mapserver.sara.nl/bonne_vect/cgi-bin/mapserv?map=bonne_vect_texel.map", 
+							{layers: 'TEXEL_20120423_OUTLINE',transparent: 'true',format: "image/png"},
+							{visibility: true,isBaseLayer:false},
+							{singleTile: true},
+							{
+								attribution: this.attribution
+							} 
+					);
+					this.map.addLayer(layer);
+					break;
+				default:
+					//do nothing
+					var layer;
+					break;
+			}
+		}
+	}
+}

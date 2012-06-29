@@ -53,6 +53,7 @@
 		//Op basis van de locatie van de client inzoomen op de kaart
 		navigator.geolocation.getCurrentPosition(showLocation);
 		api.addMarker([81314.835,455082.304],1,"Binnenhof","'s Gravenhage");
+		api.addLayers(["NATIONALE_PARKEN"]);
 	}
 	function showLocation(position){
 		var lat = position.coords.latitude;
