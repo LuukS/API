@@ -402,7 +402,7 @@ Lusc.Api.prototype.createOlMap = function() {
 					var layer = new OpenLayers.Layer.WMS.Untiled(
 							"BBG2008",
 							"http://geodata.nationaalgeoregister.nl/bestandbodemgebruik2008/wms",
-							{layers: 'bbg2008_hoofdgroep',transparent: 'true',format: "image/png"},
+							{layers: 'bbg2008',transparent: 'true',format: "image/png"},
 							{visibility: true,isBaseLayer:false},
 							{singleTile: true}
 					);
@@ -818,7 +818,7 @@ Lusc.Api.prototype.addLayers = function(arrLayerNames){
 					var layer = new OpenLayers.Layer.WMS.Untiled(
 							"BBG2008",
 							"http://geodata.nationaalgeoregister.nl/bestandbodemgebruik2008/wms",
-							{layers: 'bbg2008_hoofdgroep',transparent: 'true',format: "image/png"},
+							{layers: 'bbg2008',transparent: 'true',format: "image/png"},
 							{visibility: true,isBaseLayer:false},
 							{singleTile: true}
 					);
