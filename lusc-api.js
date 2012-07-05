@@ -122,12 +122,14 @@ Lusc.Api = function(config) {
      */
     this.supportedLayers = [
     	"AAN",
+    	"ADRESSEN",
     	"AHN25M",
+    	"BBG2008",
+    	"BESCHERMDENATUURMONUMENTEN",
     	"GEMEENTEGRENZEN",
     	"GEMEENTEGRENZEN_LABEL",
     	"NATIONALE_PARKEN",
     	"NOK2011",
-    	"TEXEL_20120423",
     	"TEXEL_20120423_OUTLINE",
     	"TOP10NL"
     ];
@@ -376,11 +378,41 @@ Lusc.Api.prototype.createOlMap = function() {
 					);
 					olMap.addLayer(layer);
 					break;
+				case "ADRESSEN":
+					var layer = new OpenLayers.Layer.WMS.Untiled(
+							"ADRESSEN",
+							"http://geodata.nationaalgeoregister.nl/inspireadressen/wms",
+							{layers: 'inspireadressen',transparent: 'true',format: "image/png"},
+							{visibility: true,isBaseLayer:false},
+							{singleTile: true}
+					);
+					olMap.addLayer(layer);
+					break;
 				case "AHN25M":
 					var layer = new OpenLayers.Layer.WMS.Untiled(
 							"AHN25M",
 							"http://geodata.nationaalgeoregister.nl/ahn25m/wms",
 							{layers: 'ahn25m',transparent: 'true',format: "image/png"},
+							{visibility: true,isBaseLayer:false},
+							{singleTile: true}
+					);
+					olMap.addLayer(layer);
+					break;
+				case "BBG2008":
+					var layer = new OpenLayers.Layer.WMS.Untiled(
+							"BBG2008",
+							"http://geodata.nationaalgeoregister.nl/bestandbodemgebruik2008/wms",
+							{layers: 'bbg2008_hoofdgroep',transparent: 'true',format: "image/png"},
+							{visibility: true,isBaseLayer:false},
+							{singleTile: true}
+					);
+					olMap.addLayer(layer);
+					break;
+				case "BESCHERMDENATUURMONUMENTEN":
+					var layer = new OpenLayers.Layer.WMS.Untiled(
+							"beschermdenatuurmonumenten",
+							"http://geodata.nationaalgeoregister.nl/beschermdenatuurmonumenten/wms",
+							{layers: 'beschermdenatuurmonumenten',transparent: 'true',format: "image/png"},
 							{visibility: true,isBaseLayer:false},
 							{singleTile: true}
 					);
@@ -429,16 +461,6 @@ Lusc.Api.prototype.createOlMap = function() {
 							"NOK2011",
 							"http://geodata.nationaalgeoregister.nl/nok2011/wms",
 							{layers: 'begrenzing,planologischeehs,verwervinginrichting',transparent: 'true',format: "image/png"},
-							{visibility: true,isBaseLayer:false},
-							{singleTile: true}
-					);
-					olMap.addLayer(layer);
-					break;
-				case "TEXEL_20120423":
-					var layer = new OpenLayers.Layer.WMS.Untiled(
-							"Gevectoriseerde Bonnebladen",
-							"http://mapserver.sara.nl/bonne_vect/cgi-bin/mapserv?map=bonne_vect_texel.map", 
-							{layers: 'TEXEL_20120423',transparent: 'true',format: "image/png"},
 							{visibility: true,isBaseLayer:false},
 							{singleTile: true}
 					);
@@ -772,6 +794,16 @@ Lusc.Api.prototype.addLayers = function(arrLayerNames){
 					);
 					this.map.addLayer(layer);
 					break;
+				case "ADRESSEN":
+					var layer = new OpenLayers.Layer.WMS.Untiled(
+							"ADRESSEN",
+							"http://geodata.nationaalgeoregister.nl/inspireadressen/wms",
+							{layers: 'inspireadressen',transparent: 'true',format: "image/png"},
+							{visibility: true,isBaseLayer:false},
+							{singleTile: true}
+					);
+					olMap.addLayer(layer);
+					break;
 				case "AHN25M":
 					var layer = new OpenLayers.Layer.WMS.Untiled(
 							"AHN25M",
@@ -781,6 +813,26 @@ Lusc.Api.prototype.addLayers = function(arrLayerNames){
 							{singleTile: true}
 					);
 					this.map.addLayer(layer);
+					break;
+				case "BBG2008":
+					var layer = new OpenLayers.Layer.WMS.Untiled(
+							"BBG2008",
+							"http://geodata.nationaalgeoregister.nl/bestandbodemgebruik2008/wms",
+							{layers: 'bbg2008_hoofdgroep',transparent: 'true',format: "image/png"},
+							{visibility: true,isBaseLayer:false},
+							{singleTile: true}
+					);
+					olMap.addLayer(layer);
+					break;
+				case "BESCHERMDENATUURMONUMENTEN":
+					var layer = new OpenLayers.Layer.WMS.Untiled(
+							"beschermdenatuurmonumenten",
+							"http://geodata.nationaalgeoregister.nl/beschermdenatuurmonumenten/wms",
+							{layers: 'beschermdenatuurmonumenten',transparent: 'true',format: "image/png"},
+							{visibility: true,isBaseLayer:false},
+							{singleTile: true}
+					);
+					olMap.addLayer(layer);
 					break;
 				case "GEMEENTEGRENZEN":
 					var layer = new OpenLayers.Layer.WMS.Untiled(
@@ -825,16 +877,6 @@ Lusc.Api.prototype.addLayers = function(arrLayerNames){
 							"NOK2011",
 							"http://geodata.nationaalgeoregister.nl/nok2011/wms",
 							{layers: 'begrenzing,planologischeehs,verwervinginrichting',transparent: 'true',format: "image/png"},
-							{visibility: true,isBaseLayer:false},
-							{singleTile: true}
-					);
-					this.map.addLayer(layer);
-					break;
-				case "TEXEL_20120423":
-					var layer = new OpenLayers.Layer.WMS.Untiled(
-							"Gevectoriseerde Bonnebladen",
-							"http://mapserver.sara.nl/bonne_vect/cgi-bin/mapserv?map=bonne_vect_texel.map", 
-							{layers: 'TEXEL_20120423',transparent: 'true',format: "image/png"},
 							{visibility: true,isBaseLayer:false},
 							{singleTile: true}
 					);
